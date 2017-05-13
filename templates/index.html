@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+    {% for url in urls %}
+     window.open("{{url}} ")
+    {% endfor %}
+    setTimeout(function(){location.reload();}, 15000)
+    </script>
+</head>
+<body>
+   wait to get a url ... 
+</body>
+</html>
