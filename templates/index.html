@@ -11,6 +11,15 @@
     </script>
 </head>
 <body>
+  <p>
    wait to get a url ... 
+  </p>
+   {% for url in urls %}
+  <p>
+    found url: ("{{url}} ")
+    <audio src="static/bark.ogg" autoplay>
+    </audio>
+  </p>
+   {% endfor %}
 </body>
 </html>

@@ -13,6 +13,8 @@ def index():
       urls=[] 
      else:
       urls=tmp.split('\n')
+      if ('' in urls):
+       urls.remove('')
     with open(urlfile, 'w') as f:
      f.write('')
     return render_template("index.html", urls=urls)
