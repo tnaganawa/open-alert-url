@@ -8,12 +8,12 @@ app = Flask(__name__)
 
 ###
 jupyter_url='http://127.0.0.1:8888'
-alertfile='urlfile.txt'
+alertfile='alertfile.txt'
 basepath='/var/tmp/open-alert-url/'
 notebookdir=basepath+'notebooks/'
 ###
-# $ echo "test-alert" >> urlfile.txt
-# $ echo "jupyter-upload-test" >> urlfile.txt
+# $ echo "test-alert" >> alertfile.txt
+# $ echo "jupyter-upload-test" >> alertfile.txt
 
 alert_to_notebook={
  "jupyter-upload-test" : "jupyter-upload.ipynb"
@@ -51,8 +51,6 @@ def index():
        notebook_content = json.load(f)
        notebook = {"content": notebook_content}
        return_value=requests.put(jupyter_url+'/api/contents/{0}'.format(notebookname), data=json.dumps(notebook))
-       #print (return_value)
-       #print (return_value.content)
        if (199 < return_value.status_code < 299):
         urls.append('{0}/notebooks/{1}'.format(jupyter_url, notebookname))
      else:
