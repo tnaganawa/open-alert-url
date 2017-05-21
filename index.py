@@ -68,6 +68,8 @@ def alertmanager():
  """
  to test this:
  $ curl -H "Content-Type: application/json" -d '[{"labels":{"alertname":"test-alert"}}]' 172.17.0.2:9093/api/v1/alerts
+ or
+ $ curl -H "Content-Type: application/json" -d '{"alerts":[{"labels":{"alertname":"test-alert"}}]}' 127.0.0.1:5000/alertmanager
  """
  alert_json=request.get_json()
  #print (alert["alerts"])
@@ -75,7 +77,7 @@ def alertmanager():
   for alert in alert_json["alerts"]:
    f.write(alert["labels"]["alertname"])
    f.write('\n')
- return ("HTTP 200 recieved")
+ return ("HTTP 200 received")
 
 
 if __name__ == "__main__":
