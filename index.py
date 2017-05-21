@@ -54,9 +54,14 @@ def index():
        if (199 < return_value.status_code < 299):
         urls.append('{0}/notebooks/{1}'.format(jupyter_url, notebookname))
      else:
-      print ("No such alert: {0}", alert)
+      #print ("No such alert: {0}", alert)
+      my_url=request.url
+      urls.append("{0}nosuchalert/{1}".format(my_url, alert))
     return render_template("index.html", urls=urls)
 
+@app.route("/nosuchalert/<alertname>")
+def nosuchalert(alertname):
+ return ("HTTP 200 No Such Alert: {0}".format(alertname))
 
 @app.route("/alertmanager", methods=["POST"])
 def alertmanager():
