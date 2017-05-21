@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import json
 import requests
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 app = Flask(__name__)
 
 
@@ -9,7 +9,7 @@ app = Flask(__name__)
 ###
 jupyter_url='http://127.0.0.1:8888'
 alertfile='alertfile.txt'
-basepath='/var/tmp/open-alert-url/'
+basepath='/var/tmp/open-pager-url/'
 notebookdir=basepath+'notebooks/'
 ###
 # $ echo "test-alert" >> alertfile.txt
@@ -56,6 +56,22 @@ def index():
      else:
       print ("No such alert: {0}", alert)
     return render_template("index.html", urls=urls)
+
+
+@app.route("/alertmanager", methods=["POST"])
+def alertmanager():
+ """
+ to test this:
+ $ curl -H "Content-Type: application/json" -d '[{"labels":{"alertname":"test-alert"}}]' 172.17.0.2:9093/api/v1/alerts
+ """
+ alert_json=request.get_json()
+ #print (alert["alerts"])
+ with open(alertfile, 'a') as f:
+  for alert in alert_json["alerts"]:
+   f.write(alert["labels"]["alertname"])
+   f.write('\n')
+ return ("HTTP 200 recieved")
+
 
 if __name__ == "__main__":
     app.run()
