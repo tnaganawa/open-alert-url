@@ -11,16 +11,22 @@ jupyter_url='http://127.0.0.1:8888'
 alertfile='alertfile.txt'
 basepath='/var/tmp/open-pager-url/'
 notebookdir=basepath+'notebooks/'
-###
-# $ echo "test-alert" >> alertfile.txt
-# $ echo "jupyter-upload-test" >> alertfile.txt
-
 alert_to_notebook={
  "jupyter-upload-test" : "jupyter-upload.ipynb"
 }
 alert_to_url={
  "test-alert" : "http://www.google.co.jp"
 }
+#
+# override settings if local_settings.py is there
+try:
+ from local_settings import *
+except ImportError as e:
+ pass
+###
+# $ echo "test-alert" >> alertfile.txt
+# $ echo "jupyter-upload-test" >> alertfile.txt
+###
 
 @app.route("/")
 def index():
