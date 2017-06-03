@@ -10,7 +10,7 @@ Optionally, it could make a sound on your laptop PC.
 
 ````
 - tested on centos7
-$ sudo pip install flask requests
+$ sudo pip install flask requests netifaces
 $ cd /var/tmp && git clone https://github.com/tnaganawa/open-alert-url.git
 $ cd open-alert-url && ./index.py
 ````

@@ -1,13 +1,13 @@
 #!/usr/bin/python
 import json
 import requests
+import netifaces
 from flask import Flask, render_template, request
 app = Flask(__name__)
 
 
 
 ###
-jupyter_url='http://127.0.0.1:8888'
 alertfile='alertfile.txt'
 basepath='/var/tmp/open-pager-url/'
 notebookdir=basepath+'notebooks/'
@@ -17,6 +17,16 @@ alert_to_notebook={
 alert_to_url={
  "test-alert" : "http://www.google.co.jp"
 }
+
+# some interface default gateway might be a public interface
+try:
+ if_number=netifaces.gateways()['default'].keys()[0]
+ if_name=netifaces.interfaces()[if_number]
+ public_ip_addr=netifaces.ifaddresses(if_name)[if_number][0]['addr']
+ jupyter_url='http://{0}:8888'.format(public_ip_addr)
+except Exception as e:
+ print ('cannot detemine public ip: {0}, fallback to localhost'.format(e))
+ jupyter_url='http://127.0.0.1:8888'
 #
 # override settings if local_settings.py is there
 try:
